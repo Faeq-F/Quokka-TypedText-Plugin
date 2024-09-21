@@ -1,0 +1,8 @@
+{
+  "Show2ItemsSpecialCommand": "2TypedText",
+  "Show3ItemsSpecialCommand": "3TypedText",
+  "Show4ItemsSpecialCommand": "4TypedText",
+  "ItemSignifier": "TT ",
+  "ShowDifferentDescriptionFlag": " --Desc",
+  "FuzzySearchThreshold": 5
+}

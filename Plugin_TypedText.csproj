@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net4.8-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>10.0</LangVersion>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <DebugType>embedded</DebugType>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+
+    <Product>Plugin_TypedText</Product>
+    <BaseOutputPath>G:\Quokka\Quokka\PlugBoard\Plugin_TypedText</BaseOutputPath>
+    <Configurations>Debug;Release;Plugin</Configurations>
+
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Quokka\Quokka.csproj"></ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContentWithTargetPath Include="settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>settings.json</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ContentWithTargetPath Include="Icons By Icons8.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>Icons By Icons8.txt</TargetPath>
+    </ContentWithTargetPath>
+
+    <ContentWithTargetPath Include="text.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>text.png</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
+
+</Project>
