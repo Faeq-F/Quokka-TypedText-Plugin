@@ -4,7 +4,6 @@ using Quokka.ListItems;
 using Quokka.PluginArch;
 using System.IO;
 using System.Windows;
-using WinCopies.Util;
 
 namespace Plugin_TypedText {
   /// <summary>
@@ -29,23 +28,22 @@ namespace Plugin_TypedText {
     public override string PluggerName { get; set; } = "TypedText";
 
     private List<ListItem> ProduceItems(string query, int number) {
+      List<ListItem> items = new();
+      if (!pluginSettings.usePlugin) return items;
+
       bool differentDesc = false;
       if (query.Contains(PluginSettings.ShowDifferentDescriptionFlag)) {
         query = query.Replace(PluginSettings.ShowDifferentDescriptionFlag, "");
         differentDesc = true;
       }
-      //
-      List<ListItem> items = new();
+
       for (int i = 0; i < number; i++) {
         items.Add(new TypedTextItem(query, differentDesc));
       }
-      //
-      if (
-            "otherTypedTextItem".Contains(query, StringComparison.OrdinalIgnoreCase)
-            || ( FuzzySearch.LD("otherTypedTextItem", query) < PluginSettings.FuzzySearchThreshold )
-      ) {
-        items.Add(new OtherTypedTextItem(query));
-      }
+
+      FuzzySearch.searchAll(query, new List<string>() { "otherTypedTextItem" }, PluginSettings.FuzzySearchThreshold)
+        .ToList().ForEach(x => items.Add(new OtherTypedTextItem(query)));
+
       return items;
     }
 
@@ -54,49 +52,53 @@ namespace Plugin_TypedText {
     /// </summary>
     /// <param name="query"><inheritdoc/></param>
     /// <returns>
-    /// A single TypedText item that shows you the query you typed in
+    /// If usePlugin is false, an empty list otherwise a single TypedText item that shows you the query you typed in
     /// </returns>
     public override List<ListItem> OnQueryChange(string query) {
+      if (!pluginSettings.usePlugin) return new List<ListItem>();
       return ProduceItems(query, 1);
     }
 
     /// <summary>
     /// <inheritdoc/><br />
-    /// Displays a message-box to the user, telling them that Quokka is about to shutdown
+    /// Displays a message-box to the user, telling them that Quokka is about to shutdown (if usePlugin is true)
     /// </summary>
     public override void OnAppShutdown() {
-      System.Windows.MessageBox.Show(
-        "Quokka is about to shutdown",
-        "Message from the TypedText plugin",
-        MessageBoxButton.OK,
-        MessageBoxImage.Information
-      );
+      if (pluginSettings.usePlugin)
+        System.Windows.MessageBox.Show(
+          "Quokka is about to shutdown",
+          "Message from the TypedText plugin",
+          MessageBoxButton.OK,
+          MessageBoxImage.Information
+        );
     }
 
     /// <summary>
     /// <inheritdoc/><br />
-    /// Displays a message-box to the user, telling them that Quokka is initializing
+    /// Displays a message-box to the user, telling them that Quokka is initializing (if usePlugin is true)
     /// </summary>
     public override void OnAppStartup() {
-      System.Windows.MessageBox.Show(
-        "Quokka is Initializing",
-        "Message from the TypedText plugin",
-        MessageBoxButton.OK,
-        MessageBoxImage.Information
-      );
+      if (pluginSettings.usePlugin)
+        System.Windows.MessageBox.Show(
+          "Quokka is Initializing",
+          "Message from the TypedText plugin",
+          MessageBoxButton.OK,
+          MessageBoxImage.Information
+        );
     }
 
     /// <summary>
     /// <inheritdoc/><br />
-    /// Displays a message-box to the user, telling them that they have launched the Search Window
+    /// Displays a message-box to the user, telling them that they have launched the Search Window (if usePlugin is true)
     /// </summary>
     public override void OnSearchWindowStartup() {
-      System.Windows.MessageBox.Show(
-        "The Search Window has been launched",
-        "Message from the TypedText plugin",
-        MessageBoxButton.OK,
-        MessageBoxImage.Information
-      );
+      if (pluginSettings.usePlugin)
+        System.Windows.MessageBox.Show(
+          "The Search Window has been launched",
+          "Message from the TypedText plugin",
+          MessageBoxButton.OK,
+          MessageBoxImage.Information
+        );
     }
 
     /// <summary>
@@ -121,8 +123,9 @@ namespace Plugin_TypedText {
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    /// <returns>All of the SpecialCommands in the plugin settings</returns>
+    /// <returns>An empty list if usePlugin is false, otherwise all of the SpecialCommands in the plugin settings</returns>
     public override List<string> SpecialCommands() {
+      if (!pluginSettings.usePlugin) return new List<string>();
       return new List<string>() {
       PluginSettings.Show2ItemsSpecialCommand, PluginSettings.Show3ItemsSpecialCommand, PluginSettings.Show4ItemsSpecialCommand };
     }
@@ -141,7 +144,10 @@ namespace Plugin_TypedText {
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    /// <returns>ItemSignifier in the plugin settings</returns>
-    public override List<string> CommandSignifiers() { return new List<string>() { PluginSettings.ItemSignifier }; }
+    /// <returns>An empty list if usePlugin is false, otherwise the ItemSignifier in the plugin settings</returns>
+    public override List<string> CommandSignifiers() {
+      if (!pluginSettings.usePlugin) return new List<string>();
+      return new List<string>() { PluginSettings.ItemSignifier };
+    }
   }
 }

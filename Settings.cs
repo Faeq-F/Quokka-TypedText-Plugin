@@ -3,6 +3,10 @@
 /// </summary>
 public class PluginSettings {
   /// <summary>
+  /// Whether or not the plugin should do anything
+  /// </summary>
+  public bool usePlugin { get; set; } = false;
+  /// <summary>
   /// The Special Command to show 2 TypedTextItems. Defaults to "2TypedText"
   /// </summary>
   public string Show2ItemsSpecialCommand { get; set; } = "2TypedText";
@@ -25,10 +29,9 @@ public class PluginSettings {
   /// <summary>
   ///   The threshold for when to consider the query
   ///   is similar enough to "otherTypedTextItem" for it to be
-  ///   displayed (defaults to 5).<br />
-  ///   Currently uses the Levenshtein distance; the larger 
-  ///   the number, the bigger the difference.
+  ///   displayed (defaults to 80). The larger 
+  ///   the number, the more similar it needs to be
   /// </summary>
-  public int FuzzySearchThreshold { get; set; } = 5;
+  public int FuzzySearchThreshold { get; set; } = 80;
 }
 
