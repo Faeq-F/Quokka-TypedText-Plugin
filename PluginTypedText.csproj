@@ -2,26 +2,27 @@
 
   <PropertyGroup>
     <TargetFramework>net4.8-windows</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishReadyToRun>true</PublishReadyToRun>
     <Nullable>enable</Nullable>
     <LangVersion>10.0</LangVersion>
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
-    <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>
     <DebugType>embedded</DebugType>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 
-    <Product>Plugin_TypedText</Product>
-    <BaseOutputPath>G:\Quokka\Quokka\PlugBoard\Plugin_TypedText</BaseOutputPath>
-    <Configurations>Debug;Release;Plugin</Configurations>
+    <Product>PluginTypedText</Product>
+    <BaseOutputPath>G:\Quokka\Quokka\PlugBoard\PluginTypedText</BaseOutputPath>
+    <Configurations>Plugin</Configurations>
 
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <Optimize>True</Optimize>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <EnableNETAnalyzers>True</EnableNETAnalyzers>
+    <AnalysisLevel>latest-all</AnalysisLevel>
   </PropertyGroup>
 
   <ItemGroup>
