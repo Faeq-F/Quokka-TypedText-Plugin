@@ -1,46 +1,35 @@
-﻿using Quokka;
 using Quokka.ListItems;
 using Quokka.PluginArch;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace PluginTypedText
 {
-  class TypedTextItem : ListItem
+  internal sealed class TypedTextItem : ListItem
   {
 
-    readonly string query;
+    private readonly string query;
 
     public TypedTextItem(string query, bool differentDesc)
     {
       Name = $"You typed `{query}`";
-      Description = "Hit the enter key to copy the text";
-      UiDispatcher.BeginInvoke(() =>
-      {
-        Icon = new BitmapImage(new Uri(
-            Environment.CurrentDirectory + "\\PlugBoard\\PluginTypedText\\Plugin\\text.png"));
-      });
+      Description = differentDesc ? "This is a different description" : "Hit the enter key to copy the text";
+      UiDispatcher.BeginInvoke(() => Icon = new BitmapImage(new Uri(
+            Environment.CurrentDirectory + "\\PlugBoard\\PluginTypedText\\Plugin\\text.png")));
       this.query = query;
-      if (differentDesc)
-      {
-        this.Description = "This is a different description";
-      }
-      else
-      {
-        this.Description = "Hit the enter key to copy the text";
-      }
     }
 
     public override void Execute()
     {
-      System.Windows.Clipboard.SetText(query);
-      App.Current.MainWindow.Close();
+      Clipboard.SetText(query);
+      Application.Current.MainWindow.Close();
     }
   }
 
-  class OtherTypedTextItem : ListItem
+  internal sealed class OtherTypedTextItem : ListItem
   {
 
-    readonly string query;
+    private readonly string query;
 
     public OtherTypedTextItem(string query)
     {
@@ -54,8 +43,8 @@ namespace PluginTypedText
 
     public override void Execute()
     {
-      System.Windows.Clipboard.SetText(query);
-      App.Current.MainWindow.Close();
+      Clipboard.SetText(query);
+      Application.Current.MainWindow.Close();
     }
   }
 }

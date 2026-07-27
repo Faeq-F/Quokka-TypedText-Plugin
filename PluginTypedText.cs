@@ -14,8 +14,7 @@ namespace PluginTypedText
   public partial class TypedText : Plugin
   {
 
-    private static PluginSettings pluginSettings = new();
-    internal static PluginSettings PluginSettings { get => pluginSettings; set => pluginSettings = value; }
+    internal static PluginSettings PluginSettings { get; set; } = new();
 
     /// <summary>
     /// Loads plugin settings
@@ -34,12 +33,15 @@ namespace PluginTypedText
     private static Collection<ListItem> ProduceItems(string query, int number)
     {
       Collection<ListItem> items = new();
-      if (!pluginSettings.UsePlugin) return items;
+      if (!PluginSettings.UsePlugin)
+      {
+        return items;
+      }
 
       bool differentDesc = false;
-      if (query.Contains(PluginSettings.ShowDifferentDescriptionFlag))
+      if (query.Contains(PluginSettings.ShowDifferentDescriptionFlag, StringComparison.Ordinal))
       {
-        query = query.Replace(PluginSettings.ShowDifferentDescriptionFlag, "");
+        query = query.Replace(PluginSettings.ShowDifferentDescriptionFlag, "", StringComparison.Ordinal);
         differentDesc = true;
       }
 
@@ -48,8 +50,8 @@ namespace PluginTypedText
         items.Add(new TypedTextItem(query, differentDesc));
       }
 
-      FuzzySearch.SearchAll(query, new Collection<string>() { "otherTypedTextItem" }, PluginSettings.FuzzySearchThreshold)
-        .ToList().ForEach(x => items.Add(new OtherTypedTextItem(query)));
+      FuzzySearch.SearchAll(query, ["otherTypedTextItem"], PluginSettings.FuzzySearchThreshold)
+        .ToList().ForEach(_ => items.Add(new OtherTypedTextItem(query)));
 
       return items;
     }
@@ -64,8 +66,9 @@ namespace PluginTypedText
     public override Collection<ListItem> OnQueryChange(string query)
     {
       query ??= "";
-      if (!pluginSettings.UsePlugin) return new Collection<ListItem>();
-      return ProduceItems(query, 1);
+      return !PluginSettings.UsePlugin
+        ? []
+        : ProduceItems(query, 1);
     }
 
     /// <summary>
@@ -74,13 +77,15 @@ namespace PluginTypedText
     /// </summary>
     public override void OnAppShutdown()
     {
-      if (pluginSettings.UsePlugin)
-        System.Windows.MessageBox.Show(
+      if (PluginSettings.UsePlugin)
+      {
+        MessageBox.Show(
           "Quokka is about to shutdown",
           "Message from the TypedText plugin",
           MessageBoxButton.OK,
           MessageBoxImage.Information
         );
+      }
     }
 
     /// <summary>
@@ -89,13 +94,15 @@ namespace PluginTypedText
     /// </summary>
     public override void OnAppStartup()
     {
-      if (pluginSettings.UsePlugin)
-        System.Windows.MessageBox.Show(
+      if (PluginSettings.UsePlugin)
+      {
+        MessageBox.Show(
           "Quokka is Initializing",
           "Message from the TypedText plugin",
           MessageBoxButton.OK,
           MessageBoxImage.Information
         );
+      }
     }
 
     /// <summary>
@@ -104,13 +111,15 @@ namespace PluginTypedText
     /// </summary>
     public override void OnSearchWindowStartup()
     {
-      if (pluginSettings.UsePlugin)
-        System.Windows.MessageBox.Show(
+      if (PluginSettings.UsePlugin)
+      {
+        MessageBox.Show(
           "The Search Window has been launched",
           "Message from the TypedText plugin",
           MessageBoxButton.OK,
           MessageBoxImage.Information
         );
+      }
     }
 
     /// <summary>
@@ -144,9 +153,13 @@ namespace PluginTypedText
     /// <returns>An empty collection if usePlugin is false, otherwise all of the SpecialCommands in the plugin settings</returns>
     public override Collection<string> SpecialCommands()
     {
-      if (!pluginSettings.UsePlugin) return new Collection<string>();
-      return new Collection<string>() {
-      PluginSettings.Show2ItemsSpecialCommand, PluginSettings.Show3ItemsSpecialCommand, PluginSettings.Show4ItemsSpecialCommand };
+      return !PluginSettings.UsePlugin
+        ? []
+        : [
+        PluginSettings.Show2ItemsSpecialCommand,
+        PluginSettings.Show3ItemsSpecialCommand,
+        PluginSettings.Show4ItemsSpecialCommand
+      ];
     }
 
     /// <summary>
@@ -168,8 +181,7 @@ namespace PluginTypedText
     /// <returns>An empty collection if usePlugin is false, otherwise the ItemSignifier in the plugin settings</returns>
     public override Collection<string> CommandSignifiers()
     {
-      if (!pluginSettings.UsePlugin) return new Collection<string>();
-      return new Collection<string>() { PluginSettings.ItemSignifier };
+      return !PluginSettings.UsePlugin ? [] : [PluginSettings.ItemSignifier];
     }
   }
 }

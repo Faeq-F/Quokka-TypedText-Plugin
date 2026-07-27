@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net4.8-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <PublishReadyToRun>true</PublishReadyToRun>
     <Nullable>enable</Nullable>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>latest</LangVersion>
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
     <SelfContained>true</SelfContained>
@@ -14,7 +14,7 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 
     <Product>PluginTypedText</Product>
-    <BaseOutputPath>G:\Quokka\Quokka\PlugBoard\PluginTypedText</BaseOutputPath>
+    <BaseOutputPath>..\BuildOutput\Quokka\PlugBoard\PluginTypedText</BaseOutputPath>
     <Configurations>Plugin</Configurations>
 
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
@@ -27,6 +27,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Quokka\Quokka.csproj"></ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Tests\**" />
+    <EmbeddedResource Remove="Tests\**" />
+    <None Remove="Tests\**" />
+    <Page Remove="Tests\**" />
   </ItemGroup>
 
   <ItemGroup>

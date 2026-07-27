@@ -32,7 +32,7 @@
     /// <summary>
     ///   The threshold for when to consider the query
     ///   is similar enough to "otherTypedTextItem" for it to be
-    ///   displayed (defaults to 80). The larger 
+    ///   displayed (defaults to 80). The larger
     ///   the number, the more similar it needs to be
     /// </summary>
     public int FuzzySearchThreshold { get; set; } = 80;
