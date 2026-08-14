@@ -8,13 +8,14 @@
     <LangVersion>latest</LangVersion>
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
-    <SelfContained>true</SelfContained>
+    <SelfContained>false</SelfContained>
     <DebugType>embedded</DebugType>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 
     <Product>PluginTypedText</Product>
     <BaseOutputPath>..\BuildOutput\Quokka\PlugBoard\PluginTypedText</BaseOutputPath>
+    <PublishDir>..\BuildOutput\Quokka\PlugBoard\PluginTypedText\Plugin\</PublishDir>
     <Configurations>Plugin</Configurations>
 
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
@@ -26,7 +27,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Quokka\Quokka.csproj"></ProjectReference>
+    <ProjectReference Include="..\Quokka\Quokka.csproj">
+      <Private>false</Private>
+      <ExcludeAssets>runtime;contentFiles</ExcludeAssets>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>

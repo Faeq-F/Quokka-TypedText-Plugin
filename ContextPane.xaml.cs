@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using Keys = System.Windows.Forms.Keys;
 
 namespace PluginTypedText
 {
@@ -77,7 +78,7 @@ namespace PluginTypedText
             }
             ButtonsListView.ScrollIntoView(ButtonsListView.SelectedItem);
             break;
-          case var value when value == (Key)Application.Current.Resources["ContextPaneKey"]:
+          case var value when value == KeyInterop.KeyFromVirtualKey((int)(Keys)Application.Current.Resources["ContextPaneKey"]):
             ReturnToSearch();
             break;
           default:
